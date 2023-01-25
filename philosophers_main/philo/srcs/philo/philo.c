@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:18:26 by brumarti          #+#    #+#             */
-/*   Updated: 2023/01/25 17:59:47 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:06:28 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*handle_philo(void	*data)
 
 	philo = (t_philo *)data;
 	
-	printf("Created Philosopher with id %d, %d ttd, %d tte and %d tts.\n", philo->n, philo->ttd, philo->tte, philo->tts);
+	printf("Created Philosopher with id %d, %d ttd, %d tte, %d tts and tdi %ld.\n", philo->n, philo->ttd, philo->tte, philo->tts, *philo->tid);
 	return (NULL);
 }
 
