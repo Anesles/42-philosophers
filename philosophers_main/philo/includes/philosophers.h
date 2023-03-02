@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/02 16:12:21 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:25:53 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 
 typedef struct s_philo t_philo;
 
+typedef struct s_fork
+{
+	pthread_mutex_t	lock;
+	int				n;
+	int				owner;
+}	t_fork;
+
 typedef struct s_data
 {
 	long int	start_time;
@@ -30,32 +37,31 @@ typedef struct s_data
 	int			tte;
 	int			tts;
 	int			n_eat;
+	t_fork		*forks;
 	t_philo 	*philos;
 }	t_data;
 
-typedef struct s_fork
-{
-	pthread_mutex_t	mt;
-}	t_fork;
 
 typedef struct s_philo
 {
 	int		isAlive;
+	int		wEat;
+	int		eat;
+	int		sle;
 	int		n;
 	int		ttd;
 	int		tte;
 	int		tts;
-	t_fork	*forks;
 	t_data	*data;
 }	t_philo;
 
 //Philo
 void	*philo_main(void *info);
 //Monitor
-void	start_simulation(t_data *data);
+void	*monitor(void *info);
 //Utils
 int		check_valid(int argc, char *argv[]);
 int		ft_atoi(const char *nptr);
 void	end_simulation(void);
-t_philo	copy_philo(int n, t_philo philo);
+void	send_msg(t_data *data, int n, char *msg);
 #endif

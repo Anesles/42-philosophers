@@ -6,48 +6,56 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:13:52 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/02 16:10:43 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:42:33 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-void	*monitor(void *info)
+int	canEat(t_data *data, t_philo *philo)
 {
-	t_data *data = (t_data *) info;
-	(void) data;
-	printf("Created monitor\n");
-	while (1)
+	t_fork			f1;
+	t_fork			f2;
+	
+	f1 = data->forks[philo->n - 1];
+	if (f1.n == philo->n)
 	{
-		usleep(5000);
+		pthread_mutex_lock(&f1.lock);
+		if (philo->n == data->n_philos)
+			f2 = data->forks[0];
+		else
+			f2 = data->forks[philo->n];
+		if (f2.n == (philo->n + 1))
+		{
+			pthread_mutex_lock(&f2.lock);
+			f2.n = philo->n;
+			send_msg(data, philo->n, "has taken a fork");
+			philo->eat = 1;
+			send_msg(data, philo->n, "is eating");
+			return (1);
+		}
 	}
-	return (NULL);
+	return (0);
 }
 
-void	start_simulation(t_data *data)
+void	*monitor(void *info)
 {
-	t_philo			*philos;
-	pthread_t		*threads;
-	int				i;
+	int	i;
+	t_philo *philo;
+	t_data *data;
 
-	philos = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
-	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos + 1));
+	data = (t_data *) info;
+	printf("Created monitor\n");
 	i = 0;
-	while(i < 5)
+	while (1)
 	{
-		philos[i].isAlive = 1;
-		philos[i].data = data;
-		philos[i].forks = malloc(sizeof(t_fork) * 2);
-		philos[i].n = i + 1;
-		philos[i].ttd = data->ttd;
-		philos[i].tte = data->tte;
-		philos[i].tts = data->tts;
-		pthread_create(&threads[i], NULL, philo_main, (void *) &philos[i]);
+		if (i == data->n_philos)
+			i = 0;
+		philo = &data->philos[i];
+		if (philo->wEat && canEat(data, philo))
+			philo->wEat = 0;
+		usleep(1000);
 		i++;
 	}
-	data->philos = philos;
-	pthread_create(&threads[i], NULL, monitor, (void *) data);
-	i = 0;
-	while (i < 6)
-		pthread_join(threads[i], NULL);
+	return (NULL);
 }
