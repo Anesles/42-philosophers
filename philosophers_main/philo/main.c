@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/01 18:08:27 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:35:23 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int	main(int argc, char *argv[])
 {
-	t_data *data;
-	t_philo **philos;
+	struct timeval	tv;
+	t_data			*data;
 	
 	if (argc == 5 || argc == 6)
 	{
-		data = malloc(sizeof(data));
+		data = malloc(sizeof(t_data));
 		data->n_philos = ft_atoi(argv[1]);
-		philos = (t_philo **)malloc(sizeof(t_philo *) * data->n_philos);
 		data->ttd = ft_atoi(argv[2]);
 		data->tte = ft_atoi(argv[3]);
 		data->tts = ft_atoi(argv[4]);
-		data->philos = philos;
+		gettimeofday(&tv,NULL);
+		data->start_time = tv.tv_usec / 1000;
 		if (argc == 6)
 			data->n_eat = ft_atoi(argv[5]);
 		else

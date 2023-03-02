@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:13:52 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/01 18:09:08 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:10:43 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,30 @@ void	*monitor(void *info)
 	return (NULL);
 }
 
-void start_simulation(t_data *data)
+void	start_simulation(t_data *data)
 {
-	int	i;
-	pthread_t	thread;
-	struct timeval tv;
-	
-	i = 1;
-	while (i <= 5)
+	t_philo			*philos;
+	pthread_t		*threads;
+	int				i;
+
+	philos = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
+	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos + 1));
+	i = 0;
+	while(i < 5)
 	{
-		data->philos[i - 1] = create_philo(i, data);
+		philos[i].isAlive = 1;
+		philos[i].data = data;
+		philos[i].forks = malloc(sizeof(t_fork) * 2);
+		philos[i].n = i + 1;
+		philos[i].ttd = data->ttd;
+		philos[i].tte = data->tte;
+		philos[i].tts = data->tts;
+		pthread_create(&threads[i], NULL, philo_main, (void *) &philos[i]);
 		i++;
 	}
-	gettimeofday(&tv,NULL);
-	data->start_time = tv.tv_sec;
-	pthread_create(&thread, NULL, monitor, (void *) data);
-	pthread_join(thread, NULL);
+	data->philos = philos;
+	pthread_create(&threads[i], NULL, monitor, (void *) data);
+	i = 0;
+	while (i < 6)
+		pthread_join(threads[i], NULL);
 }
