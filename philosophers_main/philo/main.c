@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 15:50:06 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:32:49 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	start_simulation(t_data *data)
 	int				i;
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
-	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos + 1));
+	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos));
 	data->forks = create_forks(data->n_philos);
 	i = 0;
 	while(i < data->n_philos)
@@ -44,11 +44,12 @@ void	start_simulation(t_data *data)
 		philos[i].n = i + 1;
 		philos[i].ttd = data->ttd;
 		philos[i].tte = data->tte;
+		philos[i].n_eat = 0;
 		philos[i].tts = data->tts;
 		pthread_create(&threads[i], NULL, philo_main, (void *) &philos[i]);
 		i++;
 	}
-	usleep(5000);
+	data->start = 1;
 	data->philos = philos;
 	i = 0;
 	while (i < data->n_philos)
@@ -70,8 +71,9 @@ int	main(int argc, char *argv[])
 		data->ttd = ft_atoi(argv[2]);
 		data->tte = ft_atoi(argv[3]);
 		data->tts = ft_atoi(argv[4]);
+		data->start = 0;
 		gettimeofday(&tv,NULL);
-		data->start_time = tv.tv_usec / 1000;
+		data->start_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 		if (argc == 6)
 			data->n_eat = ft_atoi(argv[5]);
 		else

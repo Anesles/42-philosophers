@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:20:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 15:33:04 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:09:48 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	send_msg(t_data *data, int n, char *msg)
 {
-	struct timeval	tv;
-	long int		start_time;
+	suseconds_t		start_time;
+	suseconds_t		time_now;
 
 	start_time = data->start_time;
-	gettimeofday(&tv, NULL);
-	printf("%ld %d %s\n", (tv.tv_usec / 1000) - start_time, n, msg);
+	time_now = get_time();
+	printf("%ld %d %s\n", time_now - start_time, n, msg);
 }
