@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 16:32:49 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:58:22 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,27 @@ void	start_simulation(t_data *data)
 	int				i;
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
-	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos));
+	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos + 1));
 	data->forks = create_forks(data->n_philos);
 	i = 0;
 	while(i < data->n_philos)
 	{
 		philos[i].isAlive = 1;
 		philos[i].data = data;
+		philos[i].hEat = 0;
+		philos[i].lastAte = get_time();
 		philos[i].n = i + 1;
-		philos[i].ttd = data->ttd;
-		philos[i].tte = data->tte;
 		philos[i].n_eat = 0;
-		philos[i].tts = data->tts;
 		pthread_create(&threads[i], NULL, philo_main, (void *) &philos[i]);
 		i++;
 	}
-	data->start = 1;
+	pthread_create(&threads[i], NULL, monitor, (void *) data);
+	data->ths = threads;
 	data->philos = philos;
+	data->start_time = get_time();
+	data->start = 1;
 	i = 0;
-	while (i < data->n_philos)
+	while (i < data->n_philos + 1)
 	{
 		pthread_join(threads[i], NULL);
 		i++;
@@ -61,8 +63,7 @@ void	start_simulation(t_data *data)
 
 int	main(int argc, char *argv[])
 {
-	struct timeval	tv;
-	t_data			*data;
+	t_data	*data;
 	
 	if (argc == 5 || argc == 6)
 	{
@@ -72,8 +73,6 @@ int	main(int argc, char *argv[])
 		data->tte = ft_atoi(argv[3]);
 		data->tts = ft_atoi(argv[4]);
 		data->start = 0;
-		gettimeofday(&tv,NULL);
-		data->start_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 		if (argc == 6)
 			data->n_eat = ft_atoi(argv[5]);
 		else

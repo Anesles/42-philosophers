@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 16:31:53 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:56:54 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,29 @@ typedef struct s_data
 	int				tts;
 	int				n_eat;
 	pthread_mutex_t	*forks;
+	pthread_t		*ths;
 	t_philo 		*philos;
 }	t_data;
 
-
 typedef struct s_philo
 {
-	int		isAlive;
-	int		n;
-	int		ttd;
-	int		tte;
-	int		tts;
-	int		n_eat;
-	t_data	*data;
+	int			isAlive;
+	int			hEat;
+	int			n;
+	suseconds_t	lastAte;
+	int			n_eat;
+	t_data		*data;
 }	t_philo;
 
 //Philo
 void		*philo_main(void *info);
 //Monitor
+void		*monitor(void *info);
 void		canEat(t_data *data, t_philo *philo);
 //Utils
 int			check_valid(int argc, char *argv[]);
 int			ft_atoi(const char *nptr);
-void		end_simulation(void);
+void		end_simulation(t_data *data);
 void		send_msg(t_data *data, int n, char *msg);
 suseconds_t	get_time();
 #endif
