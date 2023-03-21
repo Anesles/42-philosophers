@@ -6,11 +6,11 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 22:12:20 by brumarti          #+#    #+#             */
-/*   Updated: 2023/01/25 16:36:10 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:33:04 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "philosophers.h"
 
 int	ft_atoi(const char *nptr)
 {

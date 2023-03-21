@@ -6,11 +6,11 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:20:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/02 17:35:40 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:33:04 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "philosophers.h"
 
 void	send_msg(t_data *data, int n, char *msg)
 {

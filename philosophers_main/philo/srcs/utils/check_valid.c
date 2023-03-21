@@ -6,11 +6,11 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:09:50 by brumarti          #+#    #+#             */
-/*   Updated: 2023/01/25 17:27:37 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:33:04 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "philosophers.h"
 
 static int	ft_isdigit(int c)
 {

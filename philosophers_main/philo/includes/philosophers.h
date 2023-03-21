@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/02 17:25:53 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:46:04 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,22 @@
 
 typedef struct s_philo t_philo;
 
-typedef struct s_fork
-{
-	pthread_mutex_t	lock;
-	int				n;
-	int				owner;
-}	t_fork;
-
 typedef struct s_data
 {
-	long int	start_time;
-	int			n_philos;
-	int			ttd;
-	int			tte;
-	int			tts;
-	int			n_eat;
-	t_fork		*forks;
-	t_philo 	*philos;
+	long int		start_time;
+	int				n_philos;
+	int				ttd;
+	int				tte;
+	int				tts;
+	int				n_eat;
+	pthread_mutex_t	*forks;
+	t_philo 		*philos;
 }	t_data;
 
 
 typedef struct s_philo
 {
 	int		isAlive;
-	int		wEat;
-	int		eat;
-	int		sle;
 	int		n;
 	int		ttd;
 	int		tte;
@@ -58,7 +48,7 @@ typedef struct s_philo
 //Philo
 void	*philo_main(void *info);
 //Monitor
-void	*monitor(void *info);
+void	canEat(t_data *data, t_philo *philo);
 //Utils
 int		check_valid(int argc, char *argv[]);
 int		ft_atoi(const char *nptr);

@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 15:51:23 by brumarti          #+#    #+#              #
-#    Updated: 2023/03/02 17:28:42 by brumarti         ###   ########.fr        #
+#    Updated: 2023/03/21 15:32:26 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -pthread
+CFLAGS = -Wall -Wextra -Werror -g -pthread -I ./includes
 
 SRC = main.c \
 		srcs/philo/philo.c \

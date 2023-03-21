@@ -6,11 +6,11 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:07:58 by brumarti          #+#    #+#             */
-/*   Updated: 2023/02/07 17:13:19 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:33:04 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "philosophers.h"
 
 void	end_simulation(void)
 {
