@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 18:58:22 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:08:01 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	start_simulation(t_data *data)
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
 	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos + 1));
-	data->forks = create_forks(data->n_philos);
+	data->forks = create_forks(data->n_philos + 1);
 	i = 0;
 	while(i < data->n_philos)
 	{
@@ -55,10 +55,7 @@ void	start_simulation(t_data *data)
 	data->start = 1;
 	i = 0;
 	while (i < data->n_philos + 1)
-	{
-		pthread_join(threads[i], NULL);
-		i++;
-	}
+		pthread_join(threads[i++], NULL);
 }
 
 int	main(int argc, char *argv[])

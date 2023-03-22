@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 18:56:54 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:08:25 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int			isAlive;
-	int			hEat;
-	int			n;
-	suseconds_t	lastAte;
-	int			n_eat;
-	t_data		*data;
+	int				isAlive;
+	int				hEat;
+	int				n;
+	suseconds_t		lastAte;
+	int				n_eat;
+	t_data			*data;
 }	t_philo;
 
 //Philo
