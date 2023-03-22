@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:25:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/22 17:18:34 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:44:02 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	*philo_main(void *info)
 			break ;
 		}
 	}
+	printf("Philo %d ended !\n", philo->n);
 	return (NULL);
 }

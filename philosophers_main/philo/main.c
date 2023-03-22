@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/22 17:13:34 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:41:47 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	start_simulation(t_data *data)
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
 	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos + 1));
-	data->forks = create_forks(data->n_philos + 1);
+	data->forks = create_forks(data->n_philos);
 	i = 0;
 	while(i < data->n_philos)
 	{
@@ -61,11 +61,14 @@ void	start_simulation(t_data *data)
 
 int	main(int argc, char *argv[])
 {
+	pthread_mutex_t	mtx;
 	t_data	*data;
 	
 	if (argc == 5 || argc == 6)
 	{
 		data = malloc(sizeof(t_data));
+		pthread_mutex_init(&mtx, NULL);
+		data->mtxForTime = mtx;
 		data->n_philos = ft_atoi(argv[1]);
 		data->ttd = ft_atoi(argv[2]);
 		data->tte = ft_atoi(argv[3]);
