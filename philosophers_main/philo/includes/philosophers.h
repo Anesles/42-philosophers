@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/22 15:08:25 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:02:29 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdlib.h>
+
+# define ACTION_DIED "died"
+# define ACTION_EATING "is eating"
+# define ACTION_THINKING "is thinking"
+# define ACTION_SLEEPING "is sleeping"
+# define ACTION_FORK "has taken a fork"
 
 typedef struct s_philo t_philo;
 

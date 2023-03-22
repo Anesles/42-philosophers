@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:07:58 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 18:59:13 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:08:27 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void	destroy(pthread_mutex_t *forks, int n)
 
 void	end_simulation(t_data *data)
 {
-		destroy(data->forks, data->n_philos);
-		free(data->ths);
-		free(data->philos);
-		free(data);
-		exit(EXIT_FAILURE);
+	destroy(data->forks, data->n_philos);
+	free(data->philos);
+	free(data);
+	exit(EXIT_FAILURE);
 }

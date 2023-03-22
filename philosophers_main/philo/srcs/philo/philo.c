@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:25:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 18:25:14 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:05:06 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	*philo_main(void *info)
 	while(1)
 		if (philo->data->start == 1)
 			break ;
-	while(1)
+	while(philo->data->start)
 	{
 		if (philo->n_eat != philo->data->n_eat)
 		{
 			canEat(philo->data, philo);
 			philo->n_eat++;
 			usleep(philo->data->tts * 1000);
-			send_msg(philo->data, philo->n, "is thinking.");
+			send_msg(philo->data, philo->n, ACTION_THINKING);
 		}
 		else
 		{
@@ -35,5 +35,6 @@ void	*philo_main(void *info)
 			break ;
 		}
 	}
+	printf("Philo %d ended\n", philo->n);
 	return (NULL);
 }
