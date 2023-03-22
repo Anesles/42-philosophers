@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:13:52 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/22 16:59:41 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:19:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,14 @@ void	checkEnd(t_data *data)
 		else if ((get_time() - philo->lastAte) >= data->ttd)
 		{
 			send_msg(data, philo->n, ACTION_DIED);
-			end_simulation(data);
+			data->start = 0;
+			break ;
 		}
 		pthread_mutex_unlock(&(data->forks[data->n_philos]));
 		i++;
 	}
 	if (ended == data->n_philos)
-	{
-		printf("Everyone ate %d times !", data->n_eat);
-		end_simulation(data);
-	}
+		data->start = 0;
 }
 
 void canEat(t_data *data, t_philo *philo)

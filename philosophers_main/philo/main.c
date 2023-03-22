@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/22 16:55:40 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:13:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	start_simulation(t_data *data)
 	i = 0;
 	while (i < data->n_philos + 1)
 		pthread_join(threads[i++], NULL);
+	end_simulation(data);
 }
 
 int	main(int argc, char *argv[])
