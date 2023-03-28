@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_time.c                                         :+:      :+:    :+:   */
+/*   checkContinue.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/21 16:05:09 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 16:06:39 by brumarti         ###   ########.fr       */
+/*   Created: 2023/03/28 15:20:39 by brumarti          #+#    #+#             */
+/*   Updated: 2023/03/28 15:21:01 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-suseconds_t	get_time()
+int	checkContinue(t_data *data)
 {
-	struct timeval tv;
+	pthread_mutex_t	lock;
+	int	state;
 
-	gettimeofday(&tv, NULL);
-	return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	state = 0;
+	lock = data->mtxDataRace;
+	pthread_mutex_lock(&lock);
+	if (data->start == 0)
+		state = 1;
+	pthread_mutex_unlock(&lock);	
+	return (state);
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/28 16:22:45 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:38:50 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_data
 	suseconds_t		start_time;
 	int				start;
 	int				n_philos;
+	int				init;
 	int				ttd;
 	int				tte;
 	int				tts;
@@ -55,15 +56,15 @@ typedef struct s_philo
 }	t_philo;
 
 //Philo
-void		*philo_main(void *info);
+void		*philoMain(void *info);
 //Monitor
 void		*monitor(void *info);
 //Utils
-int			check_valid(int argc, char *argv[]);
-int			check_continue(t_data *data);
-void		unlock_mtx(t_data *data);
+int			checkValid(int argc, char *argv[]);
+int			checkContinue(t_data *data);
+void		unlockMtx(t_data *data);
 int			ft_atoi(const char *nptr);
-void		end_simulation(t_data *data);
-void		send_msg(t_data *data, int n, char *msg);
-suseconds_t	get_time();
+void		endSimulation(t_data *data);
+void		sendMsg(t_data *data, int n, char *msg);
+suseconds_t	getTime();
 #endif

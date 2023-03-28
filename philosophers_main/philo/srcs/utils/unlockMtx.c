@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   send_msg.c                                         :+:      :+:    :+:   */
+/*   unlockMtx.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 17:20:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 16:09:48 by brumarti         ###   ########.fr       */
+/*   Created: 2023/03/28 15:21:37 by brumarti          #+#    #+#             */
+/*   Updated: 2023/03/28 15:21:49 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	send_msg(t_data *data, int n, char *msg)
+void	unlockMtx(t_data *data)
 {
-	suseconds_t		start_time;
-	suseconds_t		time_now;
+	int	i;
 
-	start_time = data->start_time;
-	time_now = get_time();
-	printf("%ld %d %s\n", time_now - start_time, n, msg);
+	i = 0;
+	while (i < data->n_philos)
+		pthread_mutex_unlock(&(data->forks[i++]));
+	pthread_mutex_unlock(&data->mtxDataRace);
+	pthread_mutex_unlock(&data->mtxForTime);
 }

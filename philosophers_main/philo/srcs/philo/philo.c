@@ -6,13 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:25:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/28 16:26:12 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:08:11 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	get_nEat(t_data *data, int n)
+int	checkNEat(t_data *data, int n)
 {
 	int	state;
 	pthread_mutex_t	lock;
@@ -26,67 +26,87 @@ int	get_nEat(t_data *data, int n)
 	return (state);
 }
 
-void	lock_forks(t_data *data, int n)
+void	lockForks(t_data *data, int n)
 {
 	if (n == data->n_philos)
 	{
 		pthread_mutex_lock(&(data->forks[0]));
-		send_msg(data, n, ACTION_FORK);
-		pthread_mutex_lock(&(data->forks[4]));
-		send_msg(data, n, ACTION_FORK);
+		pthread_mutex_lock(&(data->forks[data->n_philos - 1]));
 	}
 	else
 	{	
 		pthread_mutex_lock(&(data->forks[n - 1]));
-		send_msg(data, n, ACTION_FORK);
 		pthread_mutex_lock(&(data->forks[n % data->n_philos]));
-		send_msg(data, n, ACTION_FORK);
 	}
+	sendMsg(data, n, ACTION_FORK);
+	sendMsg(data, n, ACTION_FORK);
 }
 
-void Eat(t_data *data, t_philo *philo)
+void	eating(t_data *data, t_philo *philo)
 {
-	if (check_continue(data))
+	if (checkContinue(data))
 		return ;
-	lock_forks(data, philo->n);
-	if (check_continue(data))
+	lockForks(data, philo->n);
+	if (checkContinue(data))
 		return ;
-	send_msg(data, philo->n, ACTION_EATING);
+	sendMsg(data, philo->n, ACTION_EATING);
 	usleep(data->tte * 1000);
-	if (check_continue(data))
+	if (checkContinue(data))
 		return ;
 	pthread_mutex_lock(&(data->mtxForTime));
-	if (check_continue(data))
+	if (checkContinue(data))
 		return ;
-	philo->lastAte = get_time();
+	philo->lastAte = getTime();
 	pthread_mutex_unlock(&(data->mtxForTime));
 	pthread_mutex_unlock(&(data->forks[philo->n - 1]));
 	pthread_mutex_unlock(&(data->forks[philo->n % data->n_philos]));
-	send_msg(data, philo->n, ACTION_SLEEPING);
+	sendMsg(data, philo->n, ACTION_SLEEPING);
 }
 
-void	*philo_main(void *info)
+int	canEat(t_data *data, int n)
+{
+	int	i;
+	
+	if (data->init == 1)
+	{
+		i = 1;
+		while (i < data->n_philos)
+		{
+			if (n == i)
+				return (1);
+			i += 3;
+		}
+	}
+	else
+		return (1);
+	data->init = 0;
+	return (0);
+}
+
+void	*philoMain(void *info)
 {
 	t_philo			*philo;
 	
 	philo = (t_philo *) info;
 	while(1)
 	{
-		if (!check_continue(philo->data))
+		if (!checkContinue(philo->data))
 			break;
 	}
 	while(philo->data->start)
 	{
-		if (get_nEat(philo->data, philo->n_eat))
+		if (checkNEat(philo->data, philo->n_eat))
 		{
-			Eat(philo->data, philo);
-			if (check_continue(philo->data))
+			if(!canEat(philo->data, philo->n))
+				usleep(500);
+			eating(philo->data, philo);
+			if (checkContinue(philo->data))
 				break;
 			philo->n_eat++;
 			usleep(philo->data->tts * 1000);
-			if (check_continue(philo->data))
+			if (checkContinue(philo->data))
 				break;
-			send_msg(philo->data, philo->n, ACTION_THINKING);
+			sendMsg(philo->data, philo->n, ACTION_THINKING);
 		}
 		else
 		{
@@ -94,5 +114,6 @@ void	*philo_main(void *info)
 			break ;
 		}
 	}
+	//printf("Philo %d has ended\n", philo->n);
 	return (NULL);
 }

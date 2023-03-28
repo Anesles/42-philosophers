@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:13:52 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/28 16:20:11 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:35:15 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	checkEnd(t_data *data)
 		philo = &data->philos[i];
 		if (philo->hEaten)
 			ended++;
-		else if ((get_time() - philo->lastAte) >= data->ttd)
+		else if ((getTime() - philo->lastAte) >= data->ttd)
 		{
-			send_msg(data, philo->n, ACTION_DIED);
+			sendMsg(data, philo->n, ACTION_DIED);
 			data->start = 0;
 			break ;
 		}
@@ -51,6 +51,6 @@ void *monitor(void *info)
 	}
 	while (data->start)
 		checkEnd(data);
-	unlock_mtx(data);
+	unlockMtx(data);
 	return (0);
 }

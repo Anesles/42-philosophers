@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_valid.c                                      :+:      :+:    :+:   */
+/*   checkValid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,7 +19,7 @@ static int	ft_isdigit(int c)
 	return (0);
 }
 
-int	check_valid(int	argc, char *argv[])
+int	checkValid(int	argc, char *argv[])
 {
 	int	i;
 	int	j;

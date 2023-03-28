@@ -6,13 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/28 16:20:11 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:06:37 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philosophers.h"
 
-pthread_mutex_t *create_forks(int n)
+pthread_mutex_t *createForks(int n)
 {
 	int	i;
 	pthread_mutex_t	*forks;
@@ -27,7 +27,7 @@ pthread_mutex_t *create_forks(int n)
 	return (forks);
 }
 
-void	start_simulation(t_data *data)
+void	startSimulation(t_data *data)
 {
 	t_philo			*philos;
 	pthread_t		*threads;
@@ -35,28 +35,28 @@ void	start_simulation(t_data *data)
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
 	threads = (pthread_t *)malloc(sizeof(pthread_t) * (data->n_philos + 1));
-	data->forks = create_forks(data->n_philos);
+	data->forks = createForks(data->n_philos);
 	i = 0;
 	while(i < data->n_philos)
 	{
 		philos[i].isAlive = 1;
 		philos[i].data = data;
 		philos[i].hEaten = 0;
-		philos[i].lastAte = get_time();
+		philos[i].lastAte = getTime();
 		philos[i].n = i + 1;
 		philos[i].n_eat = 0;
-		pthread_create(&threads[i], NULL, philo_main, (void *) &philos[i]);
+		pthread_create(&threads[i], NULL, philoMain, (void *) &philos[i]);
 		i++;
 	}
 	pthread_create(&threads[i], NULL, monitor, (void *) data);
 	data->ths = threads;
 	data->philos = philos;
-	data->start_time = get_time();
+	data->start_time = getTime();
 	data->start = 1;
 	i = 0;
 	while (i < data->n_philos + 1)
 		pthread_join(threads[i++], NULL);
-	end_simulation(data);
+	endSimulation(data);
 }
 
 int	main(int argc, char *argv[])
@@ -71,6 +71,7 @@ int	main(int argc, char *argv[])
 		pthread_mutex_init(&mtxT, NULL);
 		pthread_mutex_init(&mtxD, NULL);
 		data->mtxForTime = mtxT;
+		data->init = 1;
 		data->mtxDataRace = mtxD;
 		data->n_philos = ft_atoi(argv[1]);
 		data->ttd = ft_atoi(argv[2]);
@@ -81,6 +82,6 @@ int	main(int argc, char *argv[])
 			data->n_eat = ft_atoi(argv[5]);
 		else
 			data->n_eat = -1;
-		start_simulation(data);
+		startSimulation(data);
 	}
 }
