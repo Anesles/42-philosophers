@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_simulation.c                                   :+:      :+:    :+:   */
+/*   check_continue.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 17:07:58 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/28 15:09:00 by brumarti         ###   ########.fr       */
+/*   Created: 2023/03/28 15:20:39 by brumarti          #+#    #+#             */
+/*   Updated: 2023/03/28 15:21:01 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	destroy(pthread_mutex_t *forks, int n)
+int	check_continue(t_data *data)
 {
-	int	i;
+	pthread_mutex_t	lock;
+	int	state;
 
-	i = 0;
-	while (i < n)
-	{
-		pthread_mutex_destroy(&forks[i]);
-		i++;
-	}
-	free(forks);
-}
-
-void	end_simulation(t_data *data)
-{
-	unlock_mtx(data);
-	destroy(data->forks, data->n_philos);
-	free(data->philos);
-	free(data->ths);
-	free(data);
-	exit(EXIT_FAILURE);
+	state = 0;
+	lock = data->mtxDataRace;
+	pthread_mutex_lock(&lock);
+	if (data->start == 0)
+		state = 1;
+	pthread_mutex_unlock(&lock);	
+	return (state);
 }

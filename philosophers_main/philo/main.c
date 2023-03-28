@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/22 17:41:47 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:20:11 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	start_simulation(t_data *data)
 	{
 		philos[i].isAlive = 1;
 		philos[i].data = data;
-		philos[i].hEat = 0;
+		philos[i].hEaten = 0;
 		philos[i].lastAte = get_time();
 		philos[i].n = i + 1;
 		philos[i].n_eat = 0;
@@ -61,14 +61,17 @@ void	start_simulation(t_data *data)
 
 int	main(int argc, char *argv[])
 {
-	pthread_mutex_t	mtx;
+	pthread_mutex_t	mtxT;
+	pthread_mutex_t	mtxD;
 	t_data	*data;
 	
 	if (argc == 5 || argc == 6)
 	{
 		data = malloc(sizeof(t_data));
-		pthread_mutex_init(&mtx, NULL);
-		data->mtxForTime = mtx;
+		pthread_mutex_init(&mtxT, NULL);
+		pthread_mutex_init(&mtxD, NULL);
+		data->mtxForTime = mtxT;
+		data->mtxDataRace = mtxD;
 		data->n_philos = ft_atoi(argv[1]);
 		data->ttd = ft_atoi(argv[2]);
 		data->tte = ft_atoi(argv[3]);
