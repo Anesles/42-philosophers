@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/28 16:38:50 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:08:58 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,42 @@ typedef struct s_philo t_philo;
 typedef struct s_data
 {
 	suseconds_t		start_time;
-	int				start;
-	int				n_philos;
-	int				init;
+	int				stop;
+	int				NPhilos;
 	int				ttd;
 	int				tte;
 	int				tts;
-	int				n_eat;
+	int				NEat;
+	int				maxAte;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	mtxForTime;
-	pthread_mutex_t mtxDataRace;
-	pthread_t		*ths;
+	pthread_mutex_t	print;
+	pthread_mutex_t	eat;
 	t_philo 		*philos;
 }	t_data;
 
 typedef struct s_philo
 {
-	int				isAlive;
-	int				hEaten;
-	int				n;
-	suseconds_t		lastAte;
-	int				n_eat;
-	t_data			*data;
+	int			timesEat;
+	int			n;
+	int			rfork;
+	int			lfork;
+	suseconds_t	lastAte;
+	pthread_t	threadID;
+	t_data		*data;
 }	t_philo;
 
 //Philo
 void		*philoMain(void *info);
-//Monitor
-void		*monitor(void *info);
+//Start
+void		start(t_data *data);
+//Init
+int			init_data(int argc, char** argv, t_data *data);
+void		init(t_data *data);
 //Utils
-int			checkValid(int argc, char *argv[]);
-int			checkContinue(t_data *data);
-void		unlockMtx(t_data *data);
 int			ft_atoi(const char *nptr);
-void		endSimulation(t_data *data);
-void		sendMsg(t_data *data, int n, char *msg);
+void		sendMsg(t_philo *philo, char *msg);
 suseconds_t	getTime();
+void		endSimulation(t_data *data);
+int			checkmaxAte(t_data *data);
+int			checkStop(t_data *data);
 #endif

@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 15:51:23 by brumarti          #+#    #+#              #
-#    Updated: 2023/03/28 18:05:39 by brumarti         ###   ########.fr        #
+#    Updated: 2023/03/29 18:08:13 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,14 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -pthread -I ./includes
+CFLAGS = -Wall -Wextra -Werror -g -pthread -fsanitize=thread -I ./includes
 
 SRC = main.c \
-		srcs/philo/philo.c \
-		srcs/monitor/monitor.c \
-		srcs/utils/sendMsg.c \
-		srcs/utils/checkValid.c \
-		srcs/utils/ft_atoi.c \
-		srcs/utils/endSimulation.c \
-		srcs/utils/getTime.c \
-		srcs/utils/unlockMtx.c \
-		srcs/utils/checkContinue.c
+		srcs/init.c \
+		srcs/philo.c \
+		srcs/start.c \
+		srcs/utils.c \
+		srcs/utils2.c
 
 OBJ = $(SRC:.c=.o)
 

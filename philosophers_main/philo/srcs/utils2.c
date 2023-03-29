@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 22:12:20 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/21 15:33:04 by brumarti         ###   ########.fr       */
+/*   Created: 2023/03/29 18:07:48 by brumarti          #+#    #+#             */
+/*   Updated: 2023/03/29 18:23:11 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_atoi(const char *nptr)
+int	checkmaxAte(t_data *data)
 {
-	char	*str;
-	int		count_minus;
-	int		n;
+	int	state;
+	
+	state = 0;
+	pthread_mutex_lock(&(data->print));
+	if (data->maxAte)
+		state = 1;
+	pthread_mutex_unlock(&(data->print));
+	return (state);
+}
 
-	str = (char *)nptr;
-	count_minus = 1;
-	n = 0;
-	while (*str == ' ' || (*str >= 9 && *str <= 14))
-		str++;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			count_minus = -1;
-		str++;
-	}
-	while (*str >= 48 && *str <= 57)
-	{
-		n = n * 10 + (*str - 48);
-		str++;
-	}
-	return (n * count_minus);
+int	checkStop(t_data *data)
+{
+	int	state;
+	
+	state = 0;
+	pthread_mutex_lock(&(data->print));
+	if (data->stop)
+		state = 1;
+	pthread_mutex_unlock(&(data->print));
+	return (state);
 }
