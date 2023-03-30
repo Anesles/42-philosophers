@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:20:13 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/30 16:32:25 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:08:42 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int    init_data(int argc, char** argv, t_data *data)
 	if (argc == 6)
 		data-> NEat = ft_atoi(argv[5]);
 	else
-		data-> NEat = 0;
-	if (data->ttd <= 0 || data->tte <= 0 || data->tts <= 0 || data->NPhilos < 1 || data->NEat < 0)
+		data-> NEat = -1;
+	if (data->ttd <= 0 || data->tte <= 0 || data->tts <= 0 || data->NPhilos < 1 || (argc == 6 && data->NEat < 0))
 		return (0);
 	return (1);
 }
