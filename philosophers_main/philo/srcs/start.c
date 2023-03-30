@@ -6,17 +6,37 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:43:51 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/29 18:28:38 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:33:23 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+int	finishedEating(t_data *data)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	pthread_mutex_lock(&(data->timesEatMtx));
+	while (i < data->NPhilos)
+	{
+		if (data->philos[i].timesEat == data->NEat)
+			count++;
+		i++;
+	}
+	pthread_mutex_unlock(&(data->timesEatMtx));
+	if (count == data->NPhilos)
+		return (1);
+	return (0);
+}
+
 void	checkEnd(t_data *data)
 {
 	int	i;
 
-	while (!checkmaxAte(data) && !checkStop(data))
+	while (!checkStop(data) && !finishedEating(data))
 	{
 		i = 0;
 		while (i < data->NPhilos)
@@ -28,17 +48,18 @@ void	checkEnd(t_data *data)
 				pthread_mutex_lock(&data->print);
 				data->stop = 1;
 				pthread_mutex_unlock(&data->print);
+				pthread_mutex_unlock(&data->eat);
+				break ;
 			}
 			pthread_mutex_unlock(&data->eat);
 			i++;
 		}
 		pthread_mutex_lock(&data->print);
 		if (data->stop)
+		{
+			pthread_mutex_unlock(&data->print);
 			break ;
-		i = 0;
-		while(i < data->NPhilos && data->philos[i].timesEat >= data->NEat)
-			i++;
-		data->maxAte = (i == data->NPhilos);
+		}
 		pthread_mutex_unlock(&data->print);
 	}
 }

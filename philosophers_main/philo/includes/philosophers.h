@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/29 18:08:58 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:32:36 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct s_data
 	int				tte;
 	int				tts;
 	int				NEat;
-	int				maxAte;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
+	pthread_mutex_t	timesEatMtx;
 	pthread_mutex_t	eat;
 	t_philo 		*philos;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:25:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/29 18:31:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:43:10 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ void	eating(t_philo *philo)
 	sendMsg(philo, ACTION_FORK);
 	pthread_mutex_lock(&(philo->data->forks[philo->rfork]));
 	sendMsg(philo, ACTION_FORK);
-	pthread_mutex_lock(&(philo->data->eat));
 	sendMsg(philo, ACTION_EATING);
 	usleep(philo->data->tte * 1000);
+	pthread_mutex_lock(&(philo->data->eat));
 	philo->lastAte = getTime();
-	philo->timesEat++;
 	pthread_mutex_unlock(&(philo->data->eat));
+	pthread_mutex_lock(&(philo->data->timesEatMtx));
+	philo->timesEat++;
+	pthread_mutex_unlock(&(philo->data->timesEatMtx));
 	pthread_mutex_unlock(&(philo->data->forks[philo->lfork]));
 	pthread_mutex_unlock(&(philo->data->forks[philo->rfork]));
 }
@@ -47,13 +49,12 @@ void	*philoMain(void *info)
 	data = philo->data;
 	if (philo->n % 2)
 		usleep(500);
-	while(!checkmaxAte(data) && !checkStop(data))
+	while(!checkStop(data) && checkNEat(data, philo->timesEat))
 	{
 		eating(philo);
 		sendMsg(philo, ACTION_SLEEPING);
 		usleep(data->tts * 1000);
 		sendMsg(philo, ACTION_THINKING);
 	}
-	printf("Philo %d ended\n", philo->n);
 	return (NULL);
 }

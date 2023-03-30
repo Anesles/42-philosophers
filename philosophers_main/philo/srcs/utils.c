@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:29:31 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/29 18:23:21 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:52:05 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ suseconds_t	getTime()
 
 void	sendMsg(t_philo *philo, char *msg)
 {
-	suseconds_t		timestamp;
+	suseconds_t	timestamp;
 
 	timestamp = getTime() - philo->data->start_time;
 	pthread_mutex_lock(&(philo->data->print));
-	if (!philo->data->maxAte && !philo->data->stop)
+	if (!philo->data->stop)
 		printf("%ld %d %s\n", timestamp, philo->n, msg);
 	pthread_mutex_unlock(&(philo->data->print));
 }
@@ -59,7 +59,7 @@ void	sendMsg(t_philo *philo, char *msg)
 void    endSimulation(t_data *data)
 {
 	int	i;
-
+	
 	if (data->NPhilos == 1)
 		pthread_detach(data->philos[0].threadID);
 	else

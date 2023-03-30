@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:20:13 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/29 18:20:06 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:32:25 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int    init_data(int argc, char** argv, t_data *data)
 {
-	data->maxAte = 0;
 	data->stop = 0;
 	data->NPhilos = ft_atoi(argv[1]);
 	data->ttd = ft_atoi(argv[2]);
@@ -41,6 +40,7 @@ void    createMutexs(t_data *data)
 	}
 	pthread_mutex_init(&(data->print), NULL);
 	pthread_mutex_init(&(data->eat), NULL);
+	pthread_mutex_init(&(data->timesEatMtx), NULL);
 }
 
 void    createPhilos(t_data *data)
