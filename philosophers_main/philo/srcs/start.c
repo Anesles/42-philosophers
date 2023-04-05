@@ -6,13 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:43:51 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/05 16:14:46 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:15:35 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	finishedEating(t_data *data)
+int	finished_eating(t_data *data)
 {
 	int	i;
 	int	count;
@@ -32,27 +32,31 @@ int	finishedEating(t_data *data)
 	return (0);
 }
 
-void	checkEnd(t_data *data)
+void	died(t_data *data, int i)
+{
+	pthread_mutex_unlock(&data->eat);
+	send_msg(&(data->philos[i]), ACTION_DIED);
+	pthread_mutex_lock(&data->print);
+	data->stop = 1;
+	pthread_mutex_unlock(&data->print);
+}
+
+void	check_end(t_data *data)
 {
 	int	i;
 
-	while (!check_stop(data) && !finishedEating(data))
+	while (!check_stop(data) && !finished_eating(data))
 	{
-		i = 0;
-		while (i < data->n_philos)
+		i = -1;
+		while (++i < data->n_philos)
 		{
 			pthread_mutex_lock(&data->eat);
-			if ((getTime() - data->philos[i].last_ate) >= data->ttd)
+			if ((get_time() - data->philos[i].last_ate) >= data->ttd)
 			{
-				pthread_mutex_unlock(&data->eat);
-				sendMsg(&(data->philos[i]), ACTION_DIED);
-				pthread_mutex_lock(&data->print);
-				data->stop = 1;
-				pthread_mutex_unlock(&data->print);
+				died(data, i);
 				break ;
 			}
 			pthread_mutex_unlock(&data->eat);
-			i++;
 		}
 		pthread_mutex_lock(&data->print);
 		if (data->stop)
@@ -64,18 +68,20 @@ void	checkEnd(t_data *data)
 	}
 }
 
-void    start(t_data *data)
+void	start(t_data *data)
 {
-	int i;
+	int		i;
+	t_philo	*philo;
 
 	i = 0;
-	data->start_time = getTime();
+	data->start_time = get_time();
 	while (i < data->n_philos)
 	{
-		data->philos[i].last_ate = getTime();
-		pthread_create(&(data->philos[i].thread_id), NULL, philoMain, &(data->philos[i]));
+		philo = &(data->philos[i]);
+		data->philos[i].last_ate = get_time();
+		pthread_create(&(philo->thread_id), NULL, philo_main, philo);
 		i++;
 	}
-	checkEnd(data);
-	endSimulation(data);
+	check_end(data);
+	end_simulation(data);
 }

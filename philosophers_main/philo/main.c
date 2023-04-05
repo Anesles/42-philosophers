@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/05 16:07:46 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:00:59 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ int	main(int argc, char *argv[])
 
 	data = malloc(sizeof(t_data));
 	if (argc < 5 || argc > 6)
-		msgError("Invalid number of arguments");
+		msg_error("Invalid number of arguments");
 	if (!check_valid(argc, argv))
-		msgError("Invalid arguments");
+		msg_error("Invalid arguments");
 	else if (!init_data(argc, argv, data))
-		msgError("Initialization");
+		msg_error("Initialization");
 	init(data);
 	start(data);
 }

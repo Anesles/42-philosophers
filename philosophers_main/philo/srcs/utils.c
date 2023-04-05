@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:29:31 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/05 16:12:40 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:12:25 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,29 @@ int	ft_atoi(const char *nptr)
 	return (n * count_minus);
 }
 
-suseconds_t	getTime()
+suseconds_t	get_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	sendMsg(t_philo *philo, char *msg)
+void	send_msg(t_philo *philo, char *msg)
 {
 	suseconds_t	timestamp;
 
-	timestamp = getTime() - philo->data->start_time;
+	timestamp = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&(philo->data->print));
 	if (!philo->data->stop)
 		printf("%ld %d %s\n", timestamp, philo->n, msg);
 	pthread_mutex_unlock(&(philo->data->print));
 }
 
-void    endSimulation(t_data *data)
+void	end_simulation(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->n_philos)
 	{

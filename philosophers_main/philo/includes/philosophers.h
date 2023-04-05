@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/05 16:14:46 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:11:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_philo
 }	t_philo;
 
 //Philo
-void		*philoMain(void *info);
+void		*philo_main(void *info);
 //Start
 void		start(t_data *data);
 //Init
@@ -64,9 +64,9 @@ int			init_data(int argc, char**argv, t_data *data);
 void		init(t_data *data);
 //Utils
 int			ft_atoi(const char *nptr);
-void		sendMsg(t_philo *philo, char *msg);
-suseconds_t	getTime(void);
-void		endSimulation(t_data *data);
+void		send_msg(t_philo *philo, char *msg);
+suseconds_t	get_time(void);
+void		end_simulation(t_data *data);
 int			check_stop(t_data *data);
-void		msgError(char *msg);
+void		msg_error(char *msg);
 #endif
