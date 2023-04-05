@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:29:31 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/30 17:05:52 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:12:40 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ void    endSimulation(t_data *data)
 	int	i;
 	
 	i = 0;
-	while (i < data->NPhilos)
+	while (i < data->n_philos)
 	{
-		pthread_join(data->philos[i].threadID, NULL);
+		pthread_join(data->philos[i].thread_id, NULL);
 		i++;
 	}
 	i = 0;
-	while (i < data->NPhilos)
+	while (i < data->n_philos)
 	{
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
@@ -76,4 +76,5 @@ void    endSimulation(t_data *data)
 	pthread_mutex_destroy(&data->print);
 	free(data->philos);
 	free(data->forks);
+	exit(EXIT_SUCCESS);
 }

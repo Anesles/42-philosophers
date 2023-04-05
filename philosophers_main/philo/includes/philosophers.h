@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/30 16:32:36 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:14:46 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,38 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define ACTION_DIED "died"
-# define ACTION_EATING "is eating"
-# define ACTION_THINKING "is thinking"
-# define ACTION_SLEEPING "is sleeping"
-# define ACTION_FORK "has taken a fork"
+# define ACTION_DIED "died 💀"
+# define ACTION_EATING "is eating 😋"
+# define ACTION_THINKING "is thinking 🤔"
+# define ACTION_SLEEPING "is sleeping 😴"
+# define ACTION_FORK "has taken a fork 🍴"
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_data
 {
 	suseconds_t		start_time;
 	int				stop;
-	int				NPhilos;
+	int				n_philos;
 	int				ttd;
 	int				tte;
 	int				tts;
-	int				NEat;
+	int				n_eat;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
-	pthread_mutex_t	timesEatMtx;
+	pthread_mutex_t	times_eat_mutex;
 	pthread_mutex_t	eat;
-	t_philo 		*philos;
+	t_philo			*philos;
 }	t_data;
 
 typedef struct s_philo
 {
-	int			timesEat;
+	int			times_eat;
 	int			n;
 	int			rfork;
 	int			lfork;
-	suseconds_t	lastAte;
-	pthread_t	threadID;
+	suseconds_t	last_ate;
+	pthread_t	thread_id;
 	t_data		*data;
 }	t_philo;
 
@@ -60,13 +60,13 @@ void		*philoMain(void *info);
 //Start
 void		start(t_data *data);
 //Init
-int			init_data(int argc, char** argv, t_data *data);
+int			init_data(int argc, char**argv, t_data *data);
 void		init(t_data *data);
 //Utils
 int			ft_atoi(const char *nptr);
 void		sendMsg(t_philo *philo, char *msg);
-suseconds_t	getTime();
+suseconds_t	getTime(void);
 void		endSimulation(t_data *data);
-int			checkmaxAte(t_data *data);
-int			checkStop(t_data *data);
+int			check_stop(t_data *data);
+void		msgError(char *msg);
 #endif

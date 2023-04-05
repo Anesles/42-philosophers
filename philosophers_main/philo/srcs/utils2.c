@@ -6,13 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 18:07:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/30 15:52:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:14:46 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	checkStop(t_data *data)
+int	check_stop(t_data *data)
 {
 	int	state;
 	
@@ -22,4 +22,10 @@ int	checkStop(t_data *data)
 		state = 1;
 	pthread_mutex_unlock(&(data->print));
 	return (state);
+}
+
+void	msgError(char *msg)
+{
+	printf("Error: %s\n", msg);
+	exit(EXIT_FAILURE);
 }

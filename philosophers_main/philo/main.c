@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/29 17:52:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:07:46 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int	checkValid(int	argc, char *argv[])
+int	check_valid(int argc, char *argv[])
 {
 	int	i;
 	int	j;
@@ -42,14 +42,14 @@ int	checkValid(int	argc, char *argv[])
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
-	
+
 	data = malloc(sizeof(t_data));
 	if (argc < 5 || argc > 6)
-		printf("Error");
-	if (!checkValid(argc, argv))
-		printf("Error");
+		msgError("Invalid number of arguments");
+	if (!check_valid(argc, argv))
+		msgError("Invalid arguments");
 	else if (!init_data(argc, argv, data))
-		printf("Error");
+		msgError("Initialization");
 	init(data);
 	start(data);
 }

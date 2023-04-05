@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:43:51 by brumarti          #+#    #+#             */
-/*   Updated: 2023/03/30 16:33:23 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:14:46 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	finishedEating(t_data *data)
 
 	i = 0;
 	count = 0;
-	pthread_mutex_lock(&(data->timesEatMtx));
-	while (i < data->NPhilos)
+	pthread_mutex_lock(&(data->times_eat_mutex));
+	while (i < data->n_philos)
 	{
-		if (data->philos[i].timesEat == data->NEat)
+		if (data->philos[i].times_eat == data->n_eat)
 			count++;
 		i++;
 	}
-	pthread_mutex_unlock(&(data->timesEatMtx));
-	if (count == data->NPhilos)
+	pthread_mutex_unlock(&(data->times_eat_mutex));
+	if (count == data->n_philos)
 		return (1);
 	return (0);
 }
@@ -36,19 +36,19 @@ void	checkEnd(t_data *data)
 {
 	int	i;
 
-	while (!checkStop(data) && !finishedEating(data))
+	while (!check_stop(data) && !finishedEating(data))
 	{
 		i = 0;
-		while (i < data->NPhilos)
+		while (i < data->n_philos)
 		{
 			pthread_mutex_lock(&data->eat);
-			if ((getTime() - data->philos[i].lastAte) >= data->ttd)
+			if ((getTime() - data->philos[i].last_ate) >= data->ttd)
 			{
+				pthread_mutex_unlock(&data->eat);
 				sendMsg(&(data->philos[i]), ACTION_DIED);
 				pthread_mutex_lock(&data->print);
 				data->stop = 1;
 				pthread_mutex_unlock(&data->print);
-				pthread_mutex_unlock(&data->eat);
 				break ;
 			}
 			pthread_mutex_unlock(&data->eat);
@@ -70,10 +70,10 @@ void    start(t_data *data)
 
 	i = 0;
 	data->start_time = getTime();
-	while (i < data->NPhilos)
+	while (i < data->n_philos)
 	{
-		data->philos[i].lastAte = getTime();
-		pthread_create(&(data->philos[i].threadID), NULL, philoMain, &(data->philos[i]));
+		data->philos[i].last_ate = getTime();
+		pthread_create(&(data->philos[i].thread_id), NULL, philoMain, &(data->philos[i]));
 		i++;
 	}
 	checkEnd(data);
