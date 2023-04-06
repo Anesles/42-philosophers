@@ -1,5 +1,5 @@
 # **philosophers (Cursus from 42 Porto)**
-## **Grade: WIP**
+## **Grade: 100/100**
 ---
 ### **Summary:**
 
