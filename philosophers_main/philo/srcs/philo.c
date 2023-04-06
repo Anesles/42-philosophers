@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:25:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/05 18:10:37 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:40:40 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,20 @@ int	check_n_eat(t_data *data, int n)
 
 void	eating(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->data->forks[philo->lfork]));
-	pthread_mutex_lock(&(philo->data->forks[philo->rfork]));
+	if (philo->n == philo->data->n_philos)
+	{
+		pthread_mutex_lock(&(philo->data->forks[philo->rfork]));
+		pthread_mutex_lock(&(philo->data->forks[philo->lfork]));
+	}
+	else
+	{
+		pthread_mutex_lock(&(philo->data->forks[philo->lfork]));
+		pthread_mutex_lock(&(philo->data->forks[philo->rfork]));
+	}
 	send_msg(philo, ACTION_FORK);
 	send_msg(philo, ACTION_FORK);
-	pthread_mutex_lock(&(philo->data->eat));
 	send_msg(philo, ACTION_EATING);
+	pthread_mutex_lock(&(philo->data->eat));
 	philo->last_ate = get_time();
 	pthread_mutex_unlock(&(philo->data->eat));
 	usleep(philo->data->tte * 1000);
@@ -47,8 +55,8 @@ void	*philo_main(void *info)
 
 	philo = (t_philo *) info;
 	data = philo->data;
-	if (philo->n % 2)
-		usleep(data->tte / 50);
+	if (philo->n % 2 == 0)
+		usleep(data->tte / 60);
 	if (data->n_philos == 1)
 	{
 		send_msg(philo, ACTION_FORK);
