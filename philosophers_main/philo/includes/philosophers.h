@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:49:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/06 14:52:18 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:00:33 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ void		send_msg(t_philo *philo, char *msg);
 suseconds_t	get_time(void);
 void		end_simulation(t_data *data);
 int			check_stop(t_data *data);
-void		msg_error(char *msg);
+void		msg_error(char *msg, t_data *data);
 #endif

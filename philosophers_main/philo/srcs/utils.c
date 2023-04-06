@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:29:31 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/06 15:20:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/06 17:59:28 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	end_simulation(t_data *data)
 	}
 	pthread_mutex_destroy(&data->eat);
 	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->times_eat_mutex);
 	free(data->philos);
 	free(data->forks);
 	exit(EXIT_SUCCESS);

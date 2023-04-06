@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 18:07:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/06 15:40:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:00:04 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ int	check_stop(t_data *data)
 	return (state);
 }
 
-void	msg_error(char *msg)
+void	msg_error(char *msg, t_data *data)
 {
 	printf("Error: %s\n", msg);
+	free(data);
 	exit(EXIT_FAILURE);
 }
