@@ -1,6 +1,7 @@
 # **philosophers (Cursus from 42 Porto)**
 ## **Grade: 100/100**
 ---
+![Animation](https://user-images.githubusercontent.com/94494860/230472069-90ba9f14-8a0d-4a2b-8003-a1bf4d576a23.gif)
 ### **Summary:**
 
 In this project I had to develop a program that, with the use of multi-threading, handles a bunch of Philosophers around a round table that only eat, sleep or think.
