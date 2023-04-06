@@ -15,6 +15,10 @@ git clone git@github.com:Anesles/42-philosophers.git
 ```
 make
 ```
+* Execute philo with arguments.
+```
+./philo number_of_philos time_to_die time_to_eat time_to_sleep [number_of_times_to_eat]
+```
 ---
 ### **Makefile targets**
 
