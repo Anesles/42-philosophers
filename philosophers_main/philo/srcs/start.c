@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:43:51 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/06 14:52:29 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:45:21 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,6 @@ void	check_end(t_data *data)
 			}
 			pthread_mutex_unlock(&data->eat);
 		}
-		pthread_mutex_lock(&data->print);
-		if (data->stop)
-		{
-			pthread_mutex_unlock(&data->print);
-			break ;
-		}
-		pthread_mutex_unlock(&data->print);
 	}
 }
 

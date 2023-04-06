@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:25:59 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/06 15:40:40 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:39:44 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_n_eat(t_data *data, int n)
 
 void	eating(t_philo *philo)
 {
-	if (philo->n == philo->data->n_philos)
+	if (philo->n == philo->data->n_philos && philo->data->n_philos % 2 == 0)
 	{
 		pthread_mutex_lock(&(philo->data->forks[philo->rfork]));
 		pthread_mutex_lock(&(philo->data->forks[philo->lfork]));
@@ -64,13 +64,10 @@ void	*philo_main(void *info)
 	}
 	while (!check_stop(data) && check_n_eat(data, philo->times_eat))
 	{
-		if (philo->data->n_philos != 1)
-		{
-			eating(philo);
-			send_msg(philo, ACTION_SLEEPING);
-			usleep(data->tts * 1000);
-			send_msg(philo, ACTION_THINKING);
-		}
+		eating(philo);
+		send_msg(philo, ACTION_SLEEPING);
+		usleep(data->tts * 1000);
+		send_msg(philo, ACTION_THINKING);
 	}
 	return (NULL);
 }
