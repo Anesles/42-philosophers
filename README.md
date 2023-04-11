@@ -21,6 +21,11 @@ make
 ```
 ---
 ### **Makefile targets**
-
+```
+all
+clean
+fclean
+run
+```
 ## Disclaimer
 > At [42School](https://en.wikipedia.org/wiki/42_(school)), almost every project must be written in accordance to the [Norm](./extras/en_norm.pdf), the schools' coding standard. As a result, the implementation of certain parts may appear strange and with room for improvement.# 42-philosophers
